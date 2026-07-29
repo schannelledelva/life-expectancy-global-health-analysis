@@ -1,0 +1,27 @@
+USE LifeExpectancyDB
+GO
+CREATE TABLE LifeExpectancyTable
+(
+    Country NVARCHAR(100),
+    Year INT,
+    Status NVARCHAR(20),
+    Life_expectancy DECIMAL(5,2),
+    Adult_Mortality INT,
+    infant_deaths INT,
+    Alcohol DECIMAL(5,2),
+    percentage_expenditure DECIMAL(12,4),
+    Hepatitis_B INT,
+    Measles INT,
+    BMI DECIMAL(5,2),
+    under_five_deaths INT,
+    Polio INT,
+    Total_expenditure DECIMAL(5,2),
+    Diphtheria INT,
+    HIV_AIDS DECIMAL(5,2),
+    GDP DECIMAL(18,2),
+    population DECIMAL(18,2),
+    thinness_1_19_years DECIMAL(5,2),
+    thinness_5_9_years DECIMAL(5,2),
+    Income_composition_of_resources DECIMAL(5,3),
+    Schooling DECIMAL(5,2)
+)
