@@ -1,4 +1,4 @@
-BULK INSERT TableName
+BULK INSERT LifeExpectancy --TableName
 FROM 'C:\Path_to_dataset'
 WITH
 (
