@@ -1,0 +1,154 @@
+-- First Analysis
+CREATE VIEW v_Dim_improved_Countries AS 
+WITH yearly_avg AS (
+    SELECT
+        g.Country,
+        g.Continent,
+        f.YearKey,
+        AVG(f.Life_Expectancy) AS avg_life_exp
+    FROM v_Fact_LifeExpectancy f
+    JOIN v_Dim_Geography g ON f.CountryKey = g.CountryKey
+    WHERE g.Continent = 'Africa'
+    GROUP BY g.Country, g.Continent, f.YearKey
+),
+with_improvement AS (
+    SELECT
+        Country,
+        YearKey,
+        avg_life_exp,
+        LAG(avg_life_exp) OVER (PARTITION BY Country ORDER BY YearKey) AS prev_year,
+        avg_life_exp - LAG(avg_life_exp) OVER (PARTITION BY Country ORDER BY YearKey) AS yearly_improvement
+    FROM yearly_avg
+),
+total_improvement AS (
+    SELECT
+        Country,
+        MIN(avg_life_exp) AS life_exp_2000,
+        MAX(avg_life_exp) AS life_exp_2015,
+        MAX(avg_life_exp) - MIN(avg_life_exp) AS total_improvement
+    FROM yearly_avg
+    GROUP BY Country
+)
+SELECT TOP 10
+    Country,
+    CAST(life_exp_2000 AS DECIMAL(5,2)) AS life_exp_2000,
+    CAST(life_exp_2015 AS DECIMAL(5,2)) AS life_exp_2015,
+    CAST(total_improvement AS DECIMAL(5,2)) AS total_improvement_years
+FROM total_improvement
+ORDER BY total_improvement DESC
+GO
+-- Second Analysis
+CREATE VIEW v_Dim_Anomalies_GDP AS
+WITH averages AS (
+    SELECT 
+        AVG(life_expectancy) AS avg_le, 
+        AVG(GDP) AS avg_gdp
+    FROM LifeExpectancy
+    WHERE life_expectancy IS NOT NULL 
+      AND GDP IS NOT NULL
+),
+country_avgs AS (
+    SELECT 
+        country,
+        AVG(GDP) AS country_avg_gdp,
+        AVG(life_expectancy) AS country_avg_le
+    FROM LifeExpectancy
+    WHERE life_expectancy IS NOT NULL 
+      AND GDP IS NOT NULL
+    GROUP BY country
+)
+SELECT 
+    ca.country,
+    CAST(ca.country_avg_gdp AS DECIMAL(12,2)) AS avg_gdp,
+    CAST(ca.country_avg_le AS DECIMAL(5,2)) AS avg_life_expectancy,
+    CAST(a.avg_gdp AS DECIMAL(12,2)) AS global_avg_gdp,
+    CAST(a.avg_le AS DECIMAL(5,2)) AS global_avg_le
+FROM country_avgs ca
+CROSS JOIN averages a
+WHERE ca.country_avg_gdp > a.avg_gdp 
+  AND ca.country_avg_le < a.avg_le
+
+GO
+--Third Analysis
+
+CREATE OR ALTER VIEW v_Dim_Anomalies_schooling AS
+WITH averages AS (
+    SELECT 
+        AVG(life_expectancy) AS avg_le, 
+        AVG(Schooling) AS avg_sch
+    FROM LifeExpectancy
+    WHERE life_expectancy IS NOT NULL 
+      AND Schooling IS NOT NULL
+),
+country_avgs AS (
+    SELECT 
+        country,
+        AVG(schooling) AS country_avg_sch,
+        AVG(life_expectancy) AS country_avg_le
+    FROM LifeExpectancy
+    WHERE life_expectancy IS NOT NULL 
+      AND GDP IS NOT NULL     
+  GROUP BY country
+)
+SELECT 
+    ca.country,
+    CAST(ca.country_avg_sch AS DECIMAL(12,2)) AS avg_sch,
+    CAST(ca.country_avg_le AS DECIMAL(5,2)) AS avg_life_expectancy,
+    CAST(a.avg_sch AS DECIMAL(12,2)) AS global_avg_sch,
+    CAST(a.avg_le AS DECIMAL(5,2)) AS global_avg_le
+FROM country_avgs ca
+CROSS JOIN averages a
+WHERE ca.country_avg_sch > a.avg_sch 
+  AND ca.country_avg_le < a.avg_le
+
+--Fouth Analysis
+
+CREATE OR ALTER VIEW v_Correlation_By_Continent AS
+WITH base AS (
+    SELECT 
+        c.Continent,
+        le.Life_expectancy,
+        le.GDP,
+        le.Schooling
+    FROM LifeExpectancy le
+    JOIN v_Dim_Continent c ON le.Country = c.Country
+    WHERE le.Life_expectancy IS NOT NULL
+      AND le.GDP IS NOT NULL
+      AND le.Schooling IS NOT NULL
+),
+deviations AS (
+    SELECT
+        Continent,
+        Life_expectancy,
+        GDP,
+        Schooling,
+        Life_expectancy - AVG(Life_expectancy) OVER (PARTITION BY Continent) AS le_dev,
+        GDP             - AVG(GDP)             OVER (PARTITION BY Continent) AS gdp_dev,
+        Schooling       - AVG(Schooling)       OVER (PARTITION BY Continent) AS sch_dev
+    FROM base
+),
+stats AS (
+    SELECT
+        Continent,
+        SUM(le_dev * gdp_dev)           AS gdp_cross,
+        SQRT(SUM(POWER(le_dev,  2)))    AS le_std,
+        SQRT(SUM(POWER(gdp_dev, 2)))    AS gdp_std,
+        SUM(le_dev * sch_dev)           AS sch_cross,
+        SQRT(SUM(POWER(sch_dev, 2)))    AS sch_std
+    FROM deviations
+    GROUP BY Continent
+)
+SELECT
+    Continent,
+    CAST(gdp_cross / NULLIF(le_std * gdp_std, 0) AS DECIMAL(4,2)) AS GDP_LE_Correlation,
+    CAST(sch_cross / NULLIF(le_std * sch_std, 0) AS DECIMAL(4,2)) AS Schooling_LE_Correlation,
+    CASE
+        WHEN ABS(gdp_cross / NULLIF(le_std * gdp_std, 0)) >
+             ABS(sch_cross / NULLIF(le_std * sch_std, 0))
+        THEN 'GDP drives more'
+        ELSE 'Schooling drives more'
+    END AS Dominant_Factor
+FROM stats;
+GO
+
+GO
