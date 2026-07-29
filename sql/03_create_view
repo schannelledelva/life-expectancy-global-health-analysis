@@ -1,0 +1,255 @@
+
+CREATE OR ALTER VIEW v_Dim_Continent AS
+SELECT Country, Continent
+FROM (VALUES
+    ('Algeria', 'Africa'),
+    ('Angola', 'Africa'),
+    ('Benin', 'Africa'),
+    ('Botswana', 'Africa'),
+    ('Burkina Faso', 'Africa'),
+    ('Burundi', 'Africa'),
+    ('Ivory Coast', 'Africa'),
+    ('Cabo Verde', 'Africa'),
+    ('Cameroon', 'Africa'),
+    ('Central African Republic', 'Africa'),
+    ('Chad', 'Africa'),
+    ('Comoros', 'Africa'),
+    ('Congo', 'Africa'),
+    ('Democratic Republic of the Congo', 'Africa'),
+    ('Djibouti', 'Africa'),
+    ('Egypt', 'Africa'),
+    ('Equatorial Guinea', 'Africa'),
+    ('Eritrea', 'Africa'),
+    ('Ethiopia', 'Africa'),
+    ('Gabon', 'Africa'),
+    ('Gambia', 'Africa'),
+    ('Ghana', 'Africa'),
+    ('Guinea', 'Africa'),
+    ('Guinea-Bissau', 'Africa'),
+    ('Kenya', 'Africa'),
+    ('Lesotho', 'Africa'),
+    ('Liberia', 'Africa'),
+    ('Libya', 'Africa'),
+    ('Madagascar', 'Africa'),
+    ('Malawi', 'Africa'),
+    ('Mali', 'Africa'),
+    ('Mauritania', 'Africa'),
+    ('Mauritius', 'Africa'),
+    ('Morocco', 'Africa'),
+    ('Mozambique', 'Africa'),
+    ('Namibia', 'Africa'),
+    ('Niger', 'Africa'),
+    ('Nigeria', 'Africa'),
+    ('Rwanda', 'Africa'),
+    ('Sao Tome and Principe', 'Africa'),
+    ('Senegal', 'Africa'),
+    ('Seychelles', 'Africa'),
+    ('Sierra Leone', 'Africa'),
+    ('Somalia', 'Africa'),
+    ('South Africa', 'Africa'),
+    ('South Sudan', 'Africa'),
+    ('Sudan', 'Africa'),
+    ('Swaziland', 'Africa'),
+    ('Togo', 'Africa'),
+    ('Tunisia', 'Africa'),
+    ('Uganda', 'Africa'),
+    ('United Republic of Tanzania', 'Africa'),
+    ('Zambia', 'Africa'),
+    ('Zimbabwe', 'Africa'),
+
+    ('Afghanistan', 'Asia'),
+    ('Armenia', 'Asia'),
+    ('Azerbaijan', 'Asia'),
+    ('Bahrain', 'Asia'),
+    ('Bangladesh', 'Asia'),
+    ('Bhutan', 'Asia'),
+    ('Brunei Darussalam', 'Asia'),
+    ('Cambodia', 'Asia'),
+    ('China', 'Asia'),
+    ('Democratic People''s Republic of Korea', 'Asia'),
+    ('Georgia', 'Asia'),
+    ('India', 'Asia'),
+    ('Indonesia', 'Asia'),
+    ('Iran (Islamic Republic of)', 'Asia'),
+    ('Iraq', 'Asia'),
+    ('Israel', 'Asia'),
+    ('Japan', 'Asia'),
+    ('Jordan', 'Asia'),
+    ('Kazakhstan', 'Asia'),
+    ('Kuwait', 'Asia'),
+    ('Kyrgyzstan', 'Asia'),
+    ('Lao People''s Democratic Republic', 'Asia'),
+    ('Lebanon', 'Asia'),
+    ('Malaysia', 'Asia'),
+    ('Maldives', 'Asia'),
+    ('Mongolia', 'Asia'),
+    ('Myanmar', 'Asia'),
+    ('Nepal', 'Asia'),
+    ('Oman', 'Asia'),
+    ('Pakistan', 'Asia'),
+    ('Philippines', 'Asia'),
+    ('Qatar', 'Asia'),
+    ('Republic of Korea', 'Asia'),
+    ('Saudi Arabia', 'Asia'),
+    ('Singapore', 'Asia'),
+    ('Sri Lanka', 'Asia'),
+    ('Syrian Arab Republic', 'Asia'),
+    ('Tajikistan', 'Asia'),
+    ('Thailand', 'Asia'),
+    ('Timor-Leste', 'Asia'),
+    ('Turkey', 'Asia'),
+    ('Turkmenistan', 'Asia'),
+    ('United Arab Emirates', 'Asia'),
+    ('Uzbekistan', 'Asia'),
+    ('Viet Nam', 'Asia'),
+    ('Yemen', 'Asia'),
+    ('Singapore', 'Asia'),
+
+    ('Albania', 'Europe'),
+    ('Austria', 'Europe'),
+    ('Belarus', 'Europe'),
+    ('Belgium', 'Europe'),
+    ('Bosnia and Herzegovina', 'Europe'),
+    ('Bulgaria', 'Europe'),
+    ('Croatia', 'Europe'),
+    ('Cyprus', 'Europe'),
+    ('Czechia', 'Europe'),
+    ('Denmark', 'Europe'),
+    ('Estonia', 'Europe'),
+    ('Finland', 'Europe'),
+    ('France', 'Europe'),
+    ('Germany', 'Europe'),
+    ('Greece', 'Europe'),
+    ('Hungary', 'Europe'),
+    ('Iceland', 'Europe'),
+    ('Ireland', 'Europe'),
+    ('Italy', 'Europe'),
+    ('Latvia', 'Europe'),
+    ('Lithuania', 'Europe'),
+    ('Luxembourg', 'Europe'),
+    ('Malta', 'Europe'),
+    ('Monaco', 'Europe'),
+    ('Montenegro', 'Europe'),
+    ('Netherlands', 'Europe'),
+    ('Norway', 'Europe'),
+    ('Poland', 'Europe'),
+    ('Portugal', 'Europe'),
+    ('Republic of Moldova', 'Europe'),
+    ('Romania', 'Europe'),
+    ('Russian Federation', 'Europe'),
+    ('San Marino', 'Europe'),
+    ('Serbia', 'Europe'),
+    ('Slovakia', 'Europe'),
+    ('Slovenia', 'Europe'),
+    ('Spain', 'Europe'),
+    ('Sweden', 'Europe'),
+    ('Switzerland', 'Europe'),
+    ('The former Yugoslav republic of Macedonia', 'Europe'),
+    ('Ukraine', 'Europe'),
+    ('United Kingdom of Great Britain and Northern Ireland', 'Europe'),
+  
+    ('Antigua and Barbuda', 'Americas'),
+    ('Argentina', 'Americas'),
+    ('Bahamas', 'Americas'),
+    ('Barbados', 'Americas'),
+    ('Belize', 'Americas'),
+    ('Bolivia (Plurinational State of)', 'Americas'),
+    ('Brazil', 'Americas'),
+    ('Canada', 'Americas'),
+    ('Chile', 'Americas'),
+    ('Colombia', 'Americas'),
+    ('Cook Islands', 'Americas'),
+    ('Costa Rica', 'Americas'),
+    ('Cuba', 'Americas'),
+    ('Dominica', 'Americas'),
+    ('Dominican Republic', 'Americas'),
+    ('Ecuador', 'Americas'),
+    ('El Salvador', 'Americas'),
+    ('Grenada', 'Americas'),
+    ('Guatemala', 'Americas'),
+    ('Guyana', 'Americas'),
+    ('Haiti', 'Americas'),
+    ('Honduras', 'Americas'),
+    ('Jamaica', 'Americas'),
+    ('Mexico', 'Americas'),
+    ('Nicaragua', 'Americas'),
+    ('Panama', 'Americas'),
+    ('Paraguay', 'Americas'),
+    ('Peru', 'Americas'),
+    ('Saint Kitts and Nevis', 'Americas'),
+    ('Saint Lucia', 'Americas'),
+    ('Saint Vincent and the Grenadines', 'Americas'),
+    ('Suriname', 'Americas'),
+    ('Trinidad and Tobago', 'Americas'),
+    ('United States of America', 'Americas'),
+    ('Uruguay', 'Americas'),
+    ('Venezuela (Bolivarian Republic of)', 'Americas'),
+
+    ('Australia', 'Oceania'),
+    ('Fiji', 'Oceania'),
+    ('Kiribati', 'Oceania'),
+    ('Marshall Islands', 'Oceania'),
+    ('Micronesia (Federated States of)', 'Oceania'),
+    ('Nauru', 'Oceania'),
+    ('New Zealand', 'Oceania'),
+    ('Niue', 'Oceania'),
+    ('Palau', 'Oceania'),
+    ('Papua New Guinea', 'Oceania'),
+    ('Samoa', 'Oceania'),
+    ('Solomon Islands', 'Oceania'),
+    ('Tonga', 'Oceania'),
+    ('Tuvalu', 'Oceania'),
+    ('Vanuatu', 'Oceania')
+  ) AS ContinentMap(Country, Continent);
+GO
+
+  -- Second View
+CREATE OR ALTER VIEW v_Dim_Geography AS
+SELECT DISTINCT 
+    -- Creation of a unique ID number for every unique country
+    DENSE_RANK() OVER (ORDER BY Country) AS CountryKey,
+    Country,
+    Continent
+FROM v_Dim_continent
+WHERE Country IS NOT NULL; 
+GO
+  -- Third view
+CREATE VIEW v_Dim_Status AS
+SELECT DISTINCT 
+    -- To assign a simple ID number based on status
+    CASE WHEN LOWER(Status) LIKE 'develop_d' THEN 1 ELSE 2 END AS StatusKey,
+    -- To Standardize the spelling 
+    CASE WHEN LOWER(Status) LIKE 'develop_d' THEN 'Developed' ELSE 'Developing' END AS StatusName    
+FROM LifeExpectancy
+WHERE Status IS NOT NULL;
+GO
+
+  -- Fourth view
+CREATE OR ALTER VIEW v_Dim_Date AS
+SELECT DISTINCT 
+    [Year] AS YearKey,      -- The numerical ID for relationships
+    [Year] AS Year  -- The label that will display on charts
+FROM LifeExpectancy
+WHERE [Year] IS NOT NULL;
+GO
+
+  -- Fifth View
+CREATE VIEW v_Fact_LifeExpectancy AS
+SELECT 
+    g.CountryKey,
+    s.StatusKey,
+    le.[Year] AS YearKey,
+    CAST(le.Life_expectancy AS DECIMAL(5,2)) AS Life_Expectancy,
+    CAST(le.GDP AS DECIMAL(12,2)) AS GDP,
+    CAST(le.Schooling AS DECIMAL(4,1)) AS Schooling,
+    CAST(le.Adult_Mortality AS INT) AS Adult_Mortality,
+    CAST(le.Infant_deaths AS INT) AS Infant_Deaths
+FROM LifeExpectancy le
+INNER JOIN v_Dim_Geography g ON le.Country = g.Country
+INNER JOIN v_Dim_Status s ON 
+    (CASE WHEN LOWER(le.Status) LIKE 'develop_d' THEN 'Developed' ELSE 'Developing' END) = s.StatusName
+WHERE le.Life_expectancy IS NOT NULL; 
+  GO
+
+
+) AS ContinentMap(Country, Continent);
