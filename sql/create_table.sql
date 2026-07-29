@@ -1,6 +1,4 @@
-USE LifeExpectancyDB
-GO
-CREATE TABLE LifeExpectancyTable
+CREATE TABLE LifeExpectancy   --Or any other table name
 (
     Country NVARCHAR(100),
     Year INT,
