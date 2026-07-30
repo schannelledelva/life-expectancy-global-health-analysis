@@ -1,8 +1,8 @@
 # Dataset Source
 
 **Name:** Life Expectancy (WHO)
-**Original Author:** Kiran Shahi
-**Original Platform:** Kaggle (link no longer available)
+**Original Author:** Dhruv Gangwani
+**Original Platform:** Kaggle (The Dataset is no longer available)
 
 ## Description
 World Health Organization data covering life expectancy and related 
@@ -12,4 +12,8 @@ health, economic and social indicators for 193 countries from 2000 to 2015.
 The original dataset is included in this repository as 
 `Life_Expectancy_Data.csv` since the original Kaggle source 
 is no longer publicly available.
+
+## License
+Originally published under open data terms on Kaggle.
+Included here for reproducibility purposes only.
 
